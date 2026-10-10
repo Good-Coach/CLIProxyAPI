@@ -361,6 +361,12 @@ func (m *Manager) Remove(ctx context.Context, id string) {
 	m.persistCooldownStates(context.Background())
 }
 
+// InvalidateSessionAffinity drops every session bound to the auth, so those sessions
+// rebind by credential priority on their next request. The auth itself stays enabled.
+func (m *Manager) InvalidateSessionAffinity(authID string) {
+	m.invalidateSessionAffinity(authID)
+}
+
 func (m *Manager) invalidateSessionAffinity(authID string) {
 	if m == nil || authID == "" {
 		return
